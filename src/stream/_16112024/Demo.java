@@ -9,6 +9,7 @@ public class Demo {
 
     public static void main(String[] args) {
         // Test cases can be added here to demonstrate functionality
+
     }
 
     /**
@@ -54,7 +55,7 @@ public class Demo {
      * @param employeeList List of employees.
      * @return A map where the key is the department and the value is the list of employees in that department.
      */
-    public Map<String, List<Employee>> groupEmployeesByDepartment(List<Employee> employeeList) {
+    public Map<String, List<Employee>> groupEmploqyeesByDepartment(List<Employee> employeeList) {
         return employeeList.stream()
                 .collect(Collectors.groupingBy(Employee::getDepartment));
     }
