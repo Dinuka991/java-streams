@@ -1,6 +1,6 @@
 package array;
 
-import java.net.Inet4Address;
+import java.util.Arrays;
 import java.util.stream.IntStream;
 
 public class ArrayUtilsImpl implements ArrayUtils {
@@ -17,10 +17,10 @@ public class ArrayUtilsImpl implements ArrayUtils {
 
         for (int num : arr) {
             if (num < smallestNumber) {
-                secondSmallestNumber = smallestNumber;
-                smallestNumber = num;
+                secondSmallestNumber = smallestNumber; // Update second smallest
+                smallestNumber = num;                 // Update smallest
             } else if (num < secondSmallestNumber && num != smallestNumber) {
-                secondSmallestNumber = num;
+                secondSmallestNumber = num;           // Update second smallest
             }
         }
 
@@ -43,6 +43,7 @@ public class ArrayUtilsImpl implements ArrayUtils {
                 .toArray();      // Collect the results into an int[]
     }
 
+    // Method to find the minimum and maximum values in an array
     @Override
     public int[] findTheMinMax(int[] arr) {
         if (arr == null || arr.length == 0) {
@@ -62,7 +63,6 @@ public class ArrayUtilsImpl implements ArrayUtils {
         }
 
         return new int[]{min, max};
-
     }
 
     // Method to sort an array using Bubble Sort
@@ -95,5 +95,26 @@ public class ArrayUtilsImpl implements ArrayUtils {
         }
 
         return arr;
+    }
+
+    // Main method for testing
+    public static void main(String[] args) {
+        ArrayUtilsImpl arrayUtils = new ArrayUtilsImpl();
+
+        // Test findSecondSmallestNumber
+        int[] array1 = {5, 3, 6, 1, 2};
+        System.out.println("Second Smallest: " + arrayUtils.findSecondSmallestNumber(array1));
+
+        // Test removeTheDuplicates
+        int[] array2 = {1, 2, 2, 3, 4, 4, 5};
+        System.out.println("Without Duplicates: " + Arrays.toString(arrayUtils.removeTheDuplicates(array2)));
+
+        // Test findTheMinMax
+        int[] array3 = {7, 2, 8, 1, 3};
+        System.out.println("Min and Max: " + Arrays.toString(arrayUtils.findTheMinMax(array3)));
+
+        // Test bubbleSort
+        int[] array4 = {5, 3, 8, 6, 2};
+        System.out.println("Sorted: " + Arrays.toString(arrayUtils.bubbleSort(array4)));
     }
 }
