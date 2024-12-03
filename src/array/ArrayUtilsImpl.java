@@ -1,5 +1,6 @@
 package array;
 
+import java.net.Inet4Address;
 import java.util.stream.IntStream;
 
 public class ArrayUtilsImpl implements ArrayUtils {
@@ -40,6 +41,28 @@ public class ArrayUtilsImpl implements ArrayUtils {
         return IntStream.of(arr) // Create an IntStream from the array
                 .distinct()      // Remove duplicate values
                 .toArray();      // Collect the results into an int[]
+    }
+
+    @Override
+    public int[] findTheMinMax(int[] arr) {
+        if (arr == null || arr.length == 0) {
+            throw new IllegalArgumentException("Array must not be null or empty");
+        }
+
+        int min = Integer.MAX_VALUE;
+        int max = Integer.MIN_VALUE;
+
+        for (int a : arr) {
+            if (a > max) {
+                max = a;
+            }
+            if (a < min) {
+                min = a;
+            }
+        }
+
+        return new int[]{min, max};
+
     }
 
     // Method to sort an array using Bubble Sort
