@@ -6,6 +6,8 @@ public interface SortUtils {
 
     int[] bubbleSort(int[] arr);
 
+    int findTheSecondLargest(int[] arr);
+
     // Default demo method to showcase bubbleSort functionality
     default void demo() {
         int[] arr = {64, 34, 25, 12, 22, 11, 90};

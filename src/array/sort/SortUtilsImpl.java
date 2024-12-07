@@ -37,6 +37,31 @@ public class SortUtilsImpl implements SortUtils {
     }
 
     @Override
+    public int findTheSecondLargest(int[] arr) {
+        if (arr == null || arr.length < 2) {
+            throw new IllegalArgumentException("Array must have at least two elements.");
+        }
+
+        int max1 = Integer.MIN_VALUE; // Largest
+        int max2 = Integer.MIN_VALUE; // Second largest
+
+        for (int num : arr) {
+            if (num > max1) {
+                max2 = max1; // Update second largest
+                max1 = num;  // Update largest
+            } else if (num > max2 && num != max1) {
+                max2 = num; // Update second largest if it's less than max1 but greater than max2
+            }
+        }
+
+        if (max2 == Integer.MIN_VALUE) {
+            throw new IllegalArgumentException("Array does not have a distinct second largest element.");
+        }
+
+        return max2;
+    }
+
+    @Override
     public void demo() {
         // Example array for sorting demonstration
         int[] arr = {64, 34, 25, 12, 22, 11, 90};
