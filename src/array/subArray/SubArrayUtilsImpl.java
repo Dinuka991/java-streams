@@ -7,9 +7,11 @@ public class SubArrayUtilsImpl implements SubArrayUtils {
     // Finds two elements in the array whose sum equals the given sum
     @Override
     public int[] findTheSubArrayWithGivenSum(int[] arr, int sum) {
+        if (arr == null || arr.length < 2) return new int[0];
+
         for (int i = 0; i < arr.length; i++) {
             for (int j = i + 1; j < arr.length; j++) {
-                if (arr[i] + arr[j] == sum) { // Check for two-element subarray sum
+                if (arr[i] + arr[j] == sum) {
                     return new int[]{arr[i], arr[j]};
                 }
             }
@@ -20,6 +22,11 @@ public class SubArrayUtilsImpl implements SubArrayUtils {
     // Splits the array into two subarrays with equal sums, if possible
     @Override
     public void splitArrayByEqualSum(int[] arr) {
+        if (arr == null || arr.length < 2) {
+            System.out.println("Array is too small to split.");
+            return;
+        }
+
         int totalSum = Arrays.stream(arr).sum(); // Calculate total sum of the array
         if (totalSum % 2 != 0) {
             throw new ArithmeticException("Array cannot be split into two equal sums as the total sum is odd.");
@@ -52,6 +59,11 @@ public class SubArrayUtilsImpl implements SubArrayUtils {
     // Finds a subarray from the start of the array that sums to the target
     @Override
     public void findTheSubArrayWithGivenSum(int[] arr, double target) {
+        if (arr == null || arr.length == 0) {
+            System.out.println("Array is empty or null.");
+            return;
+        }
+
         int sum = 0;
 
         for (int i = 0; i < arr.length; i++) {
@@ -66,10 +78,36 @@ public class SubArrayUtilsImpl implements SubArrayUtils {
         System.out.println("No subarray with the given sum found.");
     }
 
-    // A demo method to showcase default interface behavior
     @Override
-    public void demo(int args) {
-        System.out.println("Demo method called with argument: " + args);
+    public void findTheMaximumSubArray(int[] arr) {
+        if (arr == null || arr.length == 0) {
+            System.out.println("Array is empty or null.");
+            return;
+        }
+
+        int globalSum = arr[0];
+        int localSum = arr[0];
+        int start = 0, end = 0, tempStart = 0;
+
+        for (int i = 1; i < arr.length; i++) {
+            if (localSum + arr[i] > arr[i]) {
+                localSum += arr[i];
+            } else {
+                localSum = arr[i];
+                tempStart = i;
+            }
+
+            if (localSum > globalSum) {
+                globalSum = localSum;
+                start = tempStart;
+                end = i;
+            }
+        }
+
+        int[] newArr = Arrays.copyOfRange(arr, start, end + 1);
+
+        System.out.println("Maximum Subarray Sum: " + globalSum);
+        System.out.println("Maximum Subarray: " + Arrays.toString(newArr));
     }
 
     public static void main(String[] args) {
@@ -87,6 +125,9 @@ public class SubArrayUtilsImpl implements SubArrayUtils {
 
         // Test findTheSubArrayWithGivenSum (continuous subarray)
         utils.findTheSubArrayWithGivenSum(new int[]{1, 2, 3, 7, 5}, 10);
+
+        // Test findTheMaximumSubArray
+        utils.findTheMaximumSubArray(new int[]{1, -2, 3, 4, -1, 2, 1, -5, 4});
 
         // Test demo method
         utils.demo(4);
