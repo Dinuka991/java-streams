@@ -12,14 +12,11 @@ public class FrequencyUtilsImpl implements FrequencyUtils {
             throw new IllegalArgumentException("Input string is empty or null");
         }
 
-        // Convert string to a character array
-        char[] chars = s.toCharArray();
-
         // Map to store character frequencies
         Map<Character, Integer> frequencyMap = new HashMap<>();
 
         // Populate the frequency map
-        for (char c : chars) {
+        for (char c : s.toCharArray()) {
             frequencyMap.put(c, frequencyMap.getOrDefault(c, 0) + 1);
         }
 
@@ -37,22 +34,33 @@ public class FrequencyUtilsImpl implements FrequencyUtils {
         return maxChar;
     }
 
+    public Character firstNonRepeatingCharacter(String s) {
+        if (s == null || s.isBlank()) {
+            return null; // Handle null or blank input
+        }
+
+        HashMap<Character, Integer> frequencyMap = new HashMap<>();
+
+        // Populate the frequency map
+        for (char c : s.trim().toCharArray()) {
+            frequencyMap.put(c, frequencyMap.getOrDefault(c, 0) + 1);
+        }
+
+        // Find the first character with a frequency of 1
+        for (char c : s.trim().toCharArray()) {
+            if (frequencyMap.get(c) == 1) {
+                return c; // Return the first non-repeating character
+            }
+        }
+
+        return null; // No non-repeating character found
+    }
+
     public static void main(String[] args) {
         FrequencyUtilsImpl utils = new FrequencyUtilsImpl();
 
-        // Test cases
-        System.out.println("Highest frequency character in 'hello': " + utils.highestFrequencyCharacter("hello")); // l
-        System.out.println("Highest frequency character in 'abracadabra': " + utils.highestFrequencyCharacter("abracadabra")); // a
-        System.out.println("Highest frequency character in 'aaaaaa': " + utils.highestFrequencyCharacter("aaaaaa")); // a
-        try {
-            System.out.println("Highest frequency character in null: " + utils.highestFrequencyCharacter(null)); // Exception
-        } catch (IllegalArgumentException e) {
-            System.out.println("Exception: " + e.getMessage());
-        }
-        try {
-            System.out.println("Highest frequency character in '  ': " + utils.highestFrequencyCharacter("  ")); // Exception
-        } catch (IllegalArgumentException e) {
-            System.out.println("Exception: " + e.getMessage());
-        }
+        // Demo: Test cases for both methods
+        System.out.println("Highest frequency character: " + utils.highestFrequencyCharacter("abracadabra")); // a
+        System.out.println("First non-repeating character: " + utils.firstNonRepeatingCharacter("abracadabra")); // c
     }
 }
