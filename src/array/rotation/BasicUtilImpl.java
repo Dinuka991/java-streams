@@ -25,6 +25,27 @@ public class BasicUtilImpl implements BasicUtil {
         return arr;
     }
 
+    @Override
+    public int[] swapTheArrayLeft(int[] arr, int k) {
+        if (arr == null || arr.length == 0) {
+            return arr; // Return as is for null or empty arrays
+        }
+
+        int n = arr.length;
+        k = k % n; // Handle cases where k > n
+
+        // Reverse the first k elements
+        reverseArray(arr, 0, k - 1);
+
+        // Reverse the remaining n-k elements
+        reverseArray(arr, k, n - 1);
+
+        // Reverse the entire array to complete the left rotation
+        reverseArray(arr, 0, n - 1);
+
+        return arr; // Return the rotated array
+    }
+
     public void reverseArray(int[] arr, int start, int end) {
         while (start < end) {
             int temp = arr[start];
