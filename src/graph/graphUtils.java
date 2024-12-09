@@ -4,6 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 public interface graphUtils {
-
-    List<String> bfs(Map<String,List<String>> graph, String start );
+    // Method to perform BFS traversal
+    List<String> bfs(Map<String, List<String>> graph, String start);
 }
