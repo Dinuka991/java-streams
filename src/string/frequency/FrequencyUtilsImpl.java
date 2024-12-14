@@ -56,6 +56,30 @@ public class FrequencyUtilsImpl implements FrequencyUtils {
         return null; // No non-repeating character found
     }
 
+    @Override
+    public Map<String, Integer> findFrequencyOfWords(String s) {
+        // Check for null or empty input
+        if (s == null || s.trim().isEmpty()) {
+            return new HashMap<>(); // Return an empty map
+        }
+
+        // Normalize the string: Convert to lowercase and remove punctuation
+        String cleanedString = s.toLowerCase().replaceAll("[^a-z0-9\\s]", "");
+
+        // Split the string into words
+        String[] words = cleanedString.split("\\s+");
+
+        // Create a map to store word frequencies
+        Map<String, Integer> wordMap = new HashMap<>();
+
+        // Iterate over the words and calculate frequencies
+        for (String word : words) {
+            wordMap.put(word, wordMap.getOrDefault(word, 0) + 1);
+        }
+
+        return wordMap;
+    }
+
     public static void main(String[] args) {
         FrequencyUtilsImpl utils = new FrequencyUtilsImpl();
 
