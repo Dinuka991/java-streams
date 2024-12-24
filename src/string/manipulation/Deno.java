@@ -5,5 +5,7 @@ public class Deno {
         StringManuUtils stringManuUtils = new StringManuUtilsImpl();
 
         System.out.println(stringManuUtils.reverseString("aolaaacva"));
+
+        System.out.println(stringManuUtils.findLengthLongestSubstring("vwkwkbkwweeee"));
     }
 }
