@@ -1,9 +1,17 @@
 package string.manipulation;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 public class StringManuUtilsImpl implements StringManuUtils {
 
     @Override
     public String reverseString(String string) {
+        if (string == null || string.isEmpty()) {
+            throw new IllegalArgumentException("Input string cannot be null or empty.");
+        }
+
         int length = string.length();
         char[] arr = string.toCharArray();
         char[] reverse = new char[length];
@@ -16,67 +24,82 @@ public class StringManuUtilsImpl implements StringManuUtils {
 
     @Override
     public int findLengthLongestSubstring(String string) {
-        // Step 1: Input validation
         if (string == null || string.isEmpty()) {
-            throw new IllegalArgumentException("Input string is invalid!");
+            throw new IllegalArgumentException("Input string cannot be null or empty.");
         }
 
-        // Step 2: Initialize variables
-        int current = 1; // Length of the current substring (at least one character)
-        int max = 1; // Minimum maximum length for non-empty strings
+        Map<Character, Integer> charIndexMap = new HashMap<>();
+        int maxLength = 0;
+        int start = 0;
 
-        // Step 3: Traverse the string
-        for (int i = 1; i < string.length(); i++) {
-            if (string.charAt(i) == string.charAt(i - 1)) {
-                current++; // Increment current length if characters match
-            } else {
-                max = Math.max(max, current); // Update max length
-                current = 1; // Reset current length for a new substring
+        for (int i = 0; i < string.length(); i++) {
+            char currentChar = string.charAt(i);
+
+            // If the character is already in the map and within the current window
+            if (charIndexMap.containsKey(currentChar) && charIndexMap.get(currentChar) >= start) {
+                start = charIndexMap.get(currentChar) + 1;
             }
+
+            // Update the character's latest index
+            charIndexMap.put(currentChar, i);
+
+            // Calculate the current window length
+            maxLength = Math.max(maxLength, i - start + 1);
         }
 
-        // Step 4: Final check after the loop
-        max = Math.max(max, current);
-
-        return max;
+        return maxLength;
     }
 
     @Override
     public String findTheLongestSubstring(String string) {
-        // Step 1: Input validation
         if (string == null || string.isEmpty()) {
-            throw new IllegalArgumentException("Input string is invalid");
+            throw new IllegalArgumentException("Input string cannot be null or empty.");
         }
 
-        // Step 2: Initialize variables
-        int current = 1; // Current substring length (start with 1 for first character)
-        int max = 0; // Max length found
-        int startOfMax = 0; // Start index of the longest substring
-        int startOfCurrent = 0; // Start index of the current substring
+        Map<Character, Integer> charIndexMap = new HashMap<>();
+        int maxLength = 0;
+        int start = 0;
+        int startOfMaxSubstring = 0;
 
-        // Step 3: Traverse the string
-        for (int i = 1; i < string.length(); i++) {
-            if (string.charAt(i) == string.charAt(i - 1)) {
-                current++; // Increment current length if characters match
-            } else {
-                // Update the max substring details if the current is longer
-                if (current > max) {
-                    max = current;
-                    startOfMax = startOfCurrent;
-                }
-                // Reset current length and update start index
-                current = 1;
-                startOfCurrent = i;
+        for (int i = 0; i < string.length(); i++) {
+            char currentChar = string.charAt(i);
+
+            // If the character is already in the map and within the current window
+            if (charIndexMap.containsKey(currentChar) && charIndexMap.get(currentChar) >= start) {
+                start = charIndexMap.get(currentChar) + 1;
+            }
+
+            // Update the character's latest index
+            charIndexMap.put(currentChar, i);
+
+            // Calculate the current window length and update the max substring details
+            if (i - start + 1 > maxLength) {
+                maxLength = i - start + 1;
+                startOfMaxSubstring = start;
             }
         }
 
-        // Step 4: Final check after the loop
-        if (current > max) {
-            max = current;
-            startOfMax = startOfCurrent;
+        return string.substring(startOfMaxSubstring, startOfMaxSubstring + maxLength);
+    }
+
+    @Override
+    public char findFirstNonRepeatingCharacter(String s) {
+        if (s == null || s.isEmpty()) {
+            throw new IllegalArgumentException("Input string cannot be null or empty.");
         }
 
-        // Step 5: Return the longest substring
-        return string.substring(startOfMax, startOfMax + max);
+        Map<Character, Integer> characterFrequencyMap = new LinkedHashMap<>();
+
+        for (char c : s.toCharArray()) {
+            characterFrequencyMap.put(c, characterFrequencyMap.getOrDefault(c, 0) + 1);
+        }
+
+        for (Map.Entry<Character, Integer> entry : characterFrequencyMap.entrySet()) {
+            if (entry.getValue() == 1) {
+                return entry.getKey();
+            }
+        }
+
+        return '\0'; // Null character
     }
 }

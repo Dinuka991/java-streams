@@ -7,4 +7,6 @@ public interface StringManuUtils {
     int findLengthLongestSubstring(String  string);
 
     String findTheLongestSubstring(String string) ;
+
+    char findFirstNonRepeatingCharacter(String s);
 }
