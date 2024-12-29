@@ -9,4 +9,6 @@ public interface FrequencyUtils {
     Character firstNonRepeatingCharacter(String s);
 
     Map<String,Integer> findFrequencyOfWords(String s);
+
+    boolean  findUniqueFrequency(int[] arr);
 }

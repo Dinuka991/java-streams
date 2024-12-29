@@ -1,7 +1,6 @@
 package string.frequency;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class FrequencyUtilsImpl implements FrequencyUtils {
 
@@ -78,6 +77,30 @@ public class FrequencyUtilsImpl implements FrequencyUtils {
         }
 
         return wordMap;
+    }
+
+    @Override
+    public boolean findUniqueFrequency(int[] arr) {
+        // Step 1: Handle edge cases
+        if (arr.length <= 1) {
+            throw new IllegalArgumentException("The input array must contain at least two elements.");
+        }
+
+        // Step 2: Count the frequency of each element
+        Map<Integer, Integer> frequencyMap = new HashMap<>();
+        for (int num : arr) {
+            frequencyMap.put(num, frequencyMap.getOrDefault(num, 0) + 1);
+        }
+
+        // Step 3: Check if frequencies are unique
+        Set<Integer> frequencySet = new HashSet<>();
+        for (int frequency : frequencyMap.values()) {
+            if (!frequencySet.add(frequency)) {
+                return false; // Duplicate frequency found
+            }
+        }
+
+        return true; // All frequencies are unique
     }
 
     public static void main(String[] args) {
