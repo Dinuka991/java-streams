@@ -8,4 +8,6 @@ public interface FrequencyUtils {
     Character findTheFirstRepeativeCharacter(String a);
     Map<String, Integer> findFrequencyOfWords(String s);
     boolean findUniqueFrequency(int[] arr);
+    Character findTheFirstNonRepeatingCharacter(String s);
+
 }

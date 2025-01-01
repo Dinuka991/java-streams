@@ -92,6 +92,31 @@ public class FrequencyUtilsImpl implements FrequencyUtils {
         return frequencyMap.size() == frequencySet.size();
     }
 
+    @Override
+    public Character findTheFirstNonRepeatingCharacter(String s) {
+        // Validate the input to ensure it's not null or empty
+        if (s == null || s.isEmpty()) {
+            throw new IllegalArgumentException("Input string must not be null or empty");
+        }
+
+        // Step 1: Use a LinkedHashMap to maintain insertion order for character frequency
+        Map<Character, Integer> frequencyMap = new LinkedHashMap<>();
+
+        // Step 2: Populate the frequency map
+        for (char ch : s.toCharArray()) {
+            frequencyMap.put(ch, frequencyMap.getOrDefault(ch, 0) + 1);
+        }
+
+        // Step 3: Find the first character with a frequency of 1
+        for (Map.Entry<Character, Integer> entry : frequencyMap.entrySet()) {
+            if (entry.getValue() == 1) {
+                return entry.getKey(); // Return the first non-repeating character
+            }
+        }
+        // Step 4: If no non-repeating character is found, return null
+        return null;
+    }
+
     public static void main(String[] args) {
         FrequencyUtilsImpl utils = new FrequencyUtilsImpl();
 
